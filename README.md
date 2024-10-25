@@ -2,7 +2,7 @@
 
 A collection of bash scripts to allow easier and programmatic interaction with `mpv` sockets
 
-When launching `mpv`, one can use `--ipc-socket` (or set the property in your `mpv.conf`) to launch `mpv` with the _one_ socket, but I tend to have lots of instances of `mpv` open. One for a video I'm watching, another for some album I'm listening to, another for a [playlist](https://github.com/seanbreckenridge/plaintext-playlist)...
+When launching `mpv`, one can use `--ipc-socket` (or set the property in your `mpv.conf`) to launch `mpv` with the _one_ socket, but I tend to have lots of instances of `mpv` open. One for a video I'm watching, another for some album I'm listening to, another for a [playlist](https://github.com/purarue/plaintext-playlist)...
 
 If you use the one IPC socket, whenever a new instance of `mpv` is launched, the old instance gets disconnected. The [`mpv` wrapper script](./mpv) creates a unique IPC socket for each `mpv` instance launched at `/tmp/mpvsockets`.
 
@@ -95,7 +95,7 @@ Dependencies: [`mpv`](https://mpv.io/), [`socat`](https://linux.die.net/man/1/so
 To install this, clone and copy all the scripts somewhere onto your `$PATH`:
 
 ```bash
-git clone https://github.com/seanbreckenridge/mpv-sockets
+git clone https://github.com/purarue/mpv-sockets
 cd ./mpv-sockets
 make
 ```
@@ -124,24 +124,24 @@ You can set the `MPV_SOCKET_DIR` environment variable to spawn sockets in a dire
 To automate the manual `git clone`/`cd`/`make`, you could instead use [`bpkg`](https://github.com/bpkg/bpkg):
 
 ```
-bpkg install -g seanbreckenridge/mpv-sockets
+bpkg install -g purarue/mpv-sockets
 ```
 
 Or [`basher`](https://github.com/basherpm/basher):
 
 ```
-basher install seanbreckenridge/mpv-sockets
+basher install purarue/mpv-sockets
 ```
 
-Note that in this case the basher `bin` has to appear before the `mpv` binary, see [my config](https://github.com/seanbreckenridge/dotfiles/blob/50fdef99d8e5343181cc68abe1a9fc0f941a0cad/.profile#L59-L60) as an example (I install basher in `$XDG_DATA_HOME`, by default it places itself in `~/.basher`)
+Note that in this case the basher `bin` has to appear before the `mpv` binary, see [my config](https://github.com/purarue/dotfiles/blob/50fdef99d8e5343181cc68abe1a9fc0f941a0cad/.profile#L59-L60) as an example (I install basher in `$XDG_DATA_HOME`, by default it places itself in `~/.basher`)
 
 ### Daemon
 
-I run [`mpv-history-daemon`](https://github.com/seanbreckenridge/mpv-history-daemon) in the background, which polls for new sockets at `/tmp/mpvsockets`, grabbing file info, metadata, and whenever I play/pause/skip anything playing in `mpv`. That creates a local JSON scrobbling history for `mpv`, which I send up to [my_feed](https://sean.fish/feed/?order_by=when&sort=desc&ftype=listen), as well as to a [websocket-based currently playing server](https://github.com/seanbreckenridge/currently_listening)
+I run [`mpv-history-daemon`](https://github.com/purarue/mpv-history-daemon) in the background, which polls for new sockets at `/tmp/mpvsockets`, grabbing file info, metadata, and whenever I play/pause/skip anything playing in `mpv`. That creates a local JSON scrobbling history for `mpv`, which I send up to [my_feed](https://sean.fish/feed/?order_by=when&sort=desc&ftype=listen), as well as to a [websocket-based currently playing server](https://github.com/purarue/currently_listening)
 
 ```
 1598956534118491075|1598957274.3349547|mpv-launched|1598957274.334953
-1598956534118491075|1598957274.335344|working-directory|/home/sean/Music
+1598956534118491075|1598957274.335344|working-directory|/home/username/Music
 1598956534118491075|1598957274.3356173|playlist-count|12
 1598956534118491075|1598957274.3421223|playlist-pos|2
 1598956534118491075|1598957274.342346|path|Masayoshi Takanaka/Masayoshi Takanaka - Alone (1988)/02 - Feedback's Feel.mp3
