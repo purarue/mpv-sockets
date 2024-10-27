@@ -84,7 +84,7 @@ To list currently paused `mpv` instances:
 
 ---
 
-I bind lots of these scripts to keybindings, so I can easily play/pause and skip songs without switching to the terminal with `mpv` running; search for `mpv` in my [config file](https://sean.fish/d/i3/config?dark)
+I bind lots of these scripts to keybindings, so I can easily play/pause and skip songs without switching to the terminal with `mpv` running; search for `mpv` in my [config file](https://purarue.xyz/d/i3/config?dark)
 
 There are lots of properties/commands one can send to `mpv`, see `mpv --list-properties` and these ([1](https://stackoverflow.com/q/35013075/9348376), [2](https://stackoverflow.com/q/62582594/9348376)) for reference.
 
@@ -137,7 +137,7 @@ Note that in this case the basher `bin` has to appear before the `mpv` binary, s
 
 ### Daemon
 
-I run [`mpv-history-daemon`](https://github.com/purarue/mpv-history-daemon) in the background, which polls for new sockets at `/tmp/mpvsockets`, grabbing file info, metadata, and whenever I play/pause/skip anything playing in `mpv`. That creates a local JSON scrobbling history for `mpv`, which I send up to [my_feed](https://sean.fish/feed/?order_by=when&sort=desc&ftype=listen), as well as to a [websocket-based currently playing server](https://github.com/purarue/currently_listening)
+I run [`mpv-history-daemon`](https://github.com/purarue/mpv-history-daemon) in the background, which polls for new sockets at `/tmp/mpvsockets`, grabbing file info, metadata, and whenever I play/pause/skip anything playing in `mpv`. That creates a local JSON scrobbling history for `mpv`, which I send up to [my_feed](https://purarue.xyz/feed/?order_by=when&sort=desc&ftype=listen), as well as to a [websocket-based currently playing server](https://github.com/purarue/currently_listening)
 
 ```
 1598956534118491075|1598957274.3349547|mpv-launched|1598957274.334953
