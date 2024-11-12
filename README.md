@@ -111,7 +111,7 @@ export PATH
 
 You could alternatively rename the `mpv` wrapper script here to something like `mpvs` and then run `mpvs` instead of `mpv` when you want unique sockets.
 
-This checks `/usr/bin/mpv`, `/bin/mpv` and `/usr/local/bin/mpv` for the `mpv` binary. If your `mpv` isn't at one of those locations, you can set the `MPV_PATH` variable in your shell profile;
+This checks `/usr/bin/mpv`, `/bin/mpv` and `/usr/local/bin/mpv` for the `mpv` binary. If your `mpv` isn't at one of those locations, you can set the `MPV_PATH` variable in your shell profile:
 
 ```
 export MPV_PATH=/home/user/bin/mpv
