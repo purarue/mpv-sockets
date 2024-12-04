@@ -84,7 +84,7 @@ To list currently paused `mpv` instances:
 $ diff -y --suppress-common-lines <(mpv-currently-playing --socket) <(mpv-active-sockets) | sed -e 's/.*>\s*//'
 ```
 
-In contrast to [`mpv-next-song`](./mpv-next-song), if you were watching some TV show episode and wanted to watch the next one, but started `mpv` with only the one file, I have [a script to open the next file and quit the old `mpv` instance](https://github.com/purarue/dotfiles/blob/master/.config/zsh/aliases/project_aliases#L221-L248)
+In contrast to [`mpv-next-song`](./mpv-next-song), if you were watching some TV show episode and wanted to watch the next one, but started `mpv` with only the one file, I have [a script to open the next file and quit the old `mpv` instance](https://github.com/purarue/dotfiles/blob/3f00c4f60eb5968c00a362fdfa99179123507cea/.config/zsh/aliases/project_aliases#L221-L248)
 
 ---
 
