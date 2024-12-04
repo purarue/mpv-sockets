@@ -6,9 +6,9 @@ When launching `mpv`, one can use `--ipc-socket` (or set the property in your `m
 
 If you use the one IPC socket, whenever a new instance of `mpv` is launched, the old instance gets disconnected. The [`mpv` wrapper script](./mpv) creates a unique IPC socket for each `mpv` instance launched at `/tmp/mpvsockets`.
 
-`mpv-active-sockets` removes any inactive (leftover socket files from instances which have been quit) `mpv` sockets, and lists active `mpv` sockets
+[`mpv-active-sockets`](./mpv-active-sockets) removes any inactive (leftover socket files from instances which have been quit) `mpv` sockets, and lists active `mpv` sockets
 
-`mpv-communicate` is a basic `socat` wrapper to send commands to the IPC server. (sends all additional arguments to the socket described by the first argument)
+[`mpv-communicate`](./mpv-communicate) is a basic `socat` wrapper to send commands to the IPC server. (sends all additional arguments to the socket described by the first argument)
 
 To illustrate:
 
@@ -40,7 +40,7 @@ $ mpv-communicate "$(mpv-active-sockets | head -n 1)" '{ "command": ["get_proper
 }
 ```
 
-`mpv-get-property` interpolates the second argument into the `get_property` `command` syntax, but is practically no different from `mpv-communicate`
+[`mpv-get-property`](./mpv-get-property) interpolates the second argument into the `get_property` `command` syntax, but is practically no different from `mpv-communicate`
 
 ```bash
 $ mpv-get-property "$(mpv-active-sockets)" path  # this works if there's only one instance of mpv active
@@ -49,38 +49,42 @@ Music/Yes/Yes - Fragile/01 - Roundabout.mp3
 
 ### `mpv-currently-playing`
 
-`mpv-currently-playing` is a `mpv-get-property` wrapper that gets information about the currently playing mpv instance. If there are multiple sockets, prints multiple lines, with one for each socket.
+[`mpv-currently-playing`](./mpv-currently-playing) fetches information about the currently playing `mpv` instance(s). If there are multiple sockets, prints multiple lines, with one for each socket.
 
-By default that will print the full path of the song that's currently playing, but you can provide the `--socket` flag to print the sockets instead.
+By default that will print the full path of the file that's currently playing, but you can provide the `--socket` flag to print the sockets instead.
 
-Lots of scripts here use `mpv-currently-playing` internally, as interacting with the currently playing `mpv` instance is pretty useful.
+Lots of scripts here use [`mpv-currently-playing`](./mpv-currently-playing) internally, as interacting with the currently playing `mpv` instance is pretty useful.
 
-- `mpv-play-pause`: toggles the currently playing `mpv` between playing/paused. It keeps track of which sockets were recently paused - if a socket can be resumed, it does that; else, tries to look for another paused `mpv` instance to resume.
+- [`mpv-play-pause`](./mpv-play-pause): toggles the currently playing `mpv` between playing/paused. It keeps track of which sockets were recently paused - if a socket can be resumed, it does that; else, tries to look for another paused `mpv` instance to resume.
 
-- `mpv-song-description`: constructs a description from the `metadata`:
+- [`mpv-song-description`](./mpv-song-description): constructs a description from the `metadata`:
 
 ```bash
 $ mpv-song-description
 Yellow Submarine - The Beatles (Revolver)
 ```
 
-- `mpv-next-song`: goes to the next song, by sending the `playlist-next` command:
+- [`mpv-next-song`](./mpv-next-song): goes to the next song, by sending the `playlist-next` command:
 
 ```bash
 mpv-communicate $(mpv-currently-playing --socket | tail -n1) '{ "command": ["playlist-next"] }'
 ```
 
-- `mpv-seek`: moves forward/backward a few seconds in the currently playing media
+- [`mpv-seek`](./mpv-seek): moves forward/backward a few seconds in the currently playing media
 
-- `mpv-quit-latest`: quit the currently playing `mpv` instance:
+- [`mpv-quit-latest`](./mpv-quit-latest): quit the currently playing `mpv` instance:
 
-```
+```bash
 mpv-communicate $(mpv-currently-playing --socket | tail -n1) 'quit'
 ```
 
 To list currently paused `mpv` instances:
 
-`$ diff -y --suppress-common-lines <(mpv-currently-playing --socket) <(mpv-active-sockets) | grep -oP '(\/tmp\/mpvsockets\/\d+)'`
+```bash
+$ diff -y --suppress-common-lines <(mpv-currently-playing --socket) <(mpv-active-sockets) | sed -e 's/.*>\s*//'
+```
+
+In contrast to [`mpv-next-song`](./mpv-next-song), if you were watching some TV show episode and wanted to watch the next one, but started `mpv` with only the one file, I have [a script to open the next file and quit the old `mpv` instance](https://github.com/purarue/dotfiles/blob/master/.config/zsh/aliases/project_aliases#L221-L248)
 
 ---
 
