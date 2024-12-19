@@ -2,9 +2,17 @@
 
 A collection of bash scripts to allow easier and programmatic interaction with `mpv` sockets
 
-When launching `mpv`, one can use `--ipc-socket` (or set the property in your `mpv.conf`) to launch `mpv` with the _one_ socket, but I tend to have lots of instances of `mpv` open. One for a video I'm watching, another for some album I'm listening to, another for a [playlist](https://github.com/purarue/plaintext-playlist)...
+One can launch `mpv` like `mpv --ipc-socket /tmp/socket`, allowing you to use commands like:
 
-If you use the one IPC socket, whenever a new instance of `mpv` is launched, the old instance gets disconnected. The [`mpv` wrapper script](./mpv) creates a unique IPC socket for each `mpv` instance launched at `/tmp/mpvsockets`.
+```
+echo '{ "command": ["get_property", "path"] }' | socat /tmp/socket -
+```
+
+... to get data from the currently playing `mpv` instance.
+
+However, if you just use the one IPC socket (`/tmp/socket`), whenever a new instance of `mpv` is launched, the old instance gets disconnected.
+
+To solve this, the [`mpv` wrapper script](./mpv) creates a unique IPC socket for each `mpv` instance launched at `/tmp/mpvsockets` using their launch time.
 
 [`mpv-active-sockets`](./mpv-active-sockets) removes any inactive (leftover socket files from instances which have been quit) `mpv` sockets, and lists active `mpv` sockets
 
