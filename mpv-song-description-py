@@ -43,4 +43,7 @@ if artist:
 if album:
     desc = f"{desc} ({album})"
 
+if not desc.strip():
+    sys.exit(1)
+
 print(desc)
